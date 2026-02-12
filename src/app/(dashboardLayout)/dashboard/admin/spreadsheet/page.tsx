@@ -74,7 +74,7 @@ export default function SpreadsheetListPage() {
                 </div>
                 <button
                     onClick={handleCreate}
-                    className="flex items-center gap-2 px-6 py-3.5 bg-green-600 text-white rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-green-700 transition-all shadow-xl shadow-green-600/20 active:scale-95"
+                    className="flex items-center gap-2 px-6 py-3.5 bg-green-600 text-white rounded-md font-bold text-xs uppercase tracking-widest hover:bg-green-700 transition-all shadow-md active:scale-95"
                 >
                     <FiPlus size={18} />
                     New Spreadsheet
@@ -90,7 +90,7 @@ export default function SpreadsheetListPage() {
                         placeholder="Search spreadsheets..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        className="w-full pl-12 pr-4 py-4 bg-white dark:bg-gray-800 border-2 border-transparent focus:border-green-600/20 rounded-2xl outline-none transition-all shadow-sm font-medium"
+                        className="w-full pl-12 pr-4 py-4 bg-white dark:bg-gray-800 border-2 border-transparent focus:border-green-600/20 rounded-md outline-none transition-all shadow-sm font-normal"
                     />
                 </div>
             </div>
@@ -107,7 +107,7 @@ export default function SpreadsheetListPage() {
                             layout
                         >
                             <Link href={`/dashboard/admin/spreadsheet/${sheet._id}`}>
-                                <div className="group bg-white dark:bg-gray-800 rounded-3xl p-6 border-2 border-transparent hover:border-green-600/20 transition-all shadow-sm hover:shadow-xl relative overflow-hidden h-full flex flex-col">
+                                <div className="group bg-white dark:bg-gray-800 rounded-md p-6 border border-gray-100 dark:border-gray-700 hover:border-green-600 transition-all shadow-sm hover:shadow-md relative overflow-hidden h-full flex flex-col">
                                     <div className="absolute top-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity">
                                         <button
                                             onClick={(e) => handleDelete(sheet._id, e)}
@@ -117,21 +117,21 @@ export default function SpreadsheetListPage() {
                                         </button>
                                     </div>
 
-                                    <div className="w-14 h-14 rounded-2xl bg-green-50 dark:bg-green-900/20 flex items-center justify-center text-green-600 mb-6 group-hover:scale-110 transition-transform duration-500">
-                                        <FiGrid size={28} />
+                                    <div className="w-10 h-10 rounded-md bg-green-50 dark:bg-green-900/20 text-green-600 mb-6 group-hover:scale-105 transition-transform duration-500 flex items-center justify-center">
+                                        <FiGrid size={24} />
                                     </div>
 
-                                    <h3 className="text-xl font-black text-gray-900 dark:text-white tracking-tight mb-2 truncate">
+                                    <h3 className="text-lg font-bold text-gray-900 dark:text-white tracking-tight mb-2 truncate uppercase">
                                         {sheet.name}
                                     </h3>
 
                                     <div className="mt-auto space-y-3 pt-6 border-t border-gray-50 dark:border-gray-700">
-                                        <div className="flex items-center gap-2 text-xs text-gray-400 font-medium">
-                                            <FiClock size={14} />
+                                        <div className="flex items-center gap-2 text-[10px] text-gray-400 font-normal uppercase tracking-widest">
+                                            <FiClock size={12} />
                                             Updated {new Date(sheet.updatedAt).toLocaleDateString()}
                                         </div>
                                         <div className="flex items-center justify-between">
-                                            <span className="text-[10px] font-black uppercase tracking-widest px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-500 rounded-md">
+                                            <span className="text-[9px] font-bold uppercase tracking-widest px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-500 rounded-md">
                                                 Active
                                             </span>
                                             <div className="text-green-600 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all">

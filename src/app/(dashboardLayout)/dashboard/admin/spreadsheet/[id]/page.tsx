@@ -58,14 +58,14 @@ export default function SpreadsheetDetailPage() {
     return (
         <div className="h-[calc(100vh-10rem)] flex flex-col gap-6">
             {/* Toolbar */}
-            <div className="flex items-center justify-between gap-4 bg-white dark:bg-gray-800 p-4 rounded-3xl border-2 border-gray-100 dark:border-gray-700 shadow-sm">
+            <div className="flex items-center justify-between gap-4 bg-white dark:bg-gray-800 p-4 rounded-md border border-gray-100 dark:border-gray-700 shadow-sm">
                 <div className="flex items-center gap-4">
-                    <Link href="/dashboard/admin/spreadsheet" className="p-2.5 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-xl transition-colors">
+                    <Link href="/dashboard/admin/spreadsheet" className="p-2.5 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors">
                         <FiArrowLeft size={20} />
                     </Link>
                     <div>
-                        <h1 className="text-xl font-black tracking-tight leading-none">{spreadsheet?.name}</h1>
-                        <p className="text-[10px] font-black uppercase tracking-widest text-green-600 mt-1">Spreadsheet Editor</p>
+                        <h1 className="text-xl font-bold tracking-tight leading-none uppercase">{spreadsheet?.name}</h1>
+                        <p className="text-[9px] font-normal uppercase tracking-widest text-green-600 mt-1">Spreadsheet Editor</p>
                     </div>
                 </div>
 
@@ -73,7 +73,7 @@ export default function SpreadsheetDetailPage() {
                     <button
                         onClick={() => (window as any).dispatchSave?.()}
                         disabled={isSaving}
-                        className="flex items-center gap-2 px-5 py-2.5 bg-green-600 text-white rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-green-700 transition-all shadow-lg shadow-green-600/20 disabled:opacity-50"
+                        className="flex items-center gap-2 px-5 py-2.5 bg-green-600 text-white rounded-md font-bold text-[10px] uppercase tracking-widest hover:bg-green-700 transition-all shadow-md disabled:opacity-50"
                     >
                         <FiSave />
                         {isSaving ? "Saving..." : "Save Changes"}
@@ -82,7 +82,7 @@ export default function SpreadsheetDetailPage() {
             </div>
 
             {/* Grid Container */}
-            <div className="flex-1 bg-white dark:bg-gray-800 rounded-3xl border-2 border-gray-100 dark:border-gray-700 shadow-sm overflow-hidden">
+            <div className="flex-1 bg-white dark:bg-gray-800 rounded-md border border-gray-100 dark:border-gray-700 shadow-sm overflow-hidden">
                 <SpreadsheetGrid
                     initialData={spreadsheet?.data || []}
                     onSave={handleSave}
