@@ -572,3 +572,14 @@ export const spreadsheetService = {
     update: (id, data) => apiFetch(`/api/spreadsheet/${id}`, { method: 'PATCH', body: JSON.stringify(data) }),
     delete: (id) => apiFetch(`/api/spreadsheet/${id}`, { method: 'DELETE' }),
 };
+
+// ==================== FLOW SERVICE ====================
+export const flowService = {
+    getAll: () => apiFetch('/api/flows'),
+    getById: (id) => apiFetch(`/api/flows/${id}`),
+    create: (data) => apiFetch('/api/flows', { method: 'POST', body: JSON.stringify(data) }),
+    update: (id, data) => apiFetch(`/api/flows/${id}`, { method: 'PATCH', body: JSON.stringify(data) }),
+    delete: (id) => apiFetch(`/api/flows/${id}`, { method: 'DELETE' }),
+    duplicate: (id) => apiFetch(`/api/flows/${id}/duplicate`, { method: 'POST' }),
+    toggleActive: (id) => apiFetch(`/api/flows/${id}/toggle-active`, { method: 'PATCH' }),
+};

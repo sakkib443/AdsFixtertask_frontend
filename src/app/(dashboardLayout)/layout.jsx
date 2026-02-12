@@ -31,6 +31,12 @@ const menuItems = [
         gradient: "from-indigo-500 to-purple-500"
     },
     {
+        name: "Flow Manager",
+        href: "/dashboard/admin/flows",
+        icon: FiLayout,
+        gradient: "from-cyan-500 to-blue-500"
+    },
+    {
         name: "Flow Builder",
         href: "/builder",
         icon: FiLayout,

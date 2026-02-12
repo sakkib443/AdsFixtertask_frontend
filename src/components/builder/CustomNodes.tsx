@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import { Handle, Position, NodeProps } from 'reactflow';
-import { FiMessageSquare, FiPlay, FiSquare, FiHelpCircle, FiArrowDownCircle } from 'react-icons/fi';
+import { FiMessageSquare, FiPlay, FiSquare, FiHelpCircle, FiArrowDownCircle, FiClock, FiGlobe, FiCornerDownRight } from 'react-icons/fi';
 
 const BaseNode = ({ children, title, icon: Icon, color, selected, type }: any) => (
     <div className={`min-w-[180px] rounded-2xl bg-white dark:bg-gray-900 border-2 transition-all ${selected ? 'border-primary ring-4 ring-primary/10' : 'border-gray-100 dark:border-gray-800'} shadow-xl`}>
@@ -26,6 +26,8 @@ export const StartNode = memo(({ data, selected }: NodeProps) => (
 export const MessageNode = memo(({ data, selected }: NodeProps) => (
     <BaseNode title="Send Message" icon={FiMessageSquare} color="bg-blue-500" selected={selected}>
         <p className="text-xs text-gray-700 dark:text-gray-300 line-clamp-2">{data.message || 'No message set...'}</p>
+        {data.imageUrl && <img src={data.imageUrl} alt="" className="w-full h-20 object-cover rounded-lg mt-2" />}
+        {data.linkUrl && <p className="text-[10px] text-blue-500 truncate mt-1">🔗 {data.linkUrl}</p>}
         <Handle type="target" position={Position.Top} className="w-3 h-3 bg-gray-300 border-2 border-white" />
         <Handle type="source" position={Position.Bottom} className="w-3 h-3 bg-blue-500 border-2 border-white" />
     </BaseNode>
@@ -56,6 +58,25 @@ export const ConditionNode = memo(({ data, selected }: NodeProps) => (
     </BaseNode>
 ));
 
+export const DelayNode = memo(({ data, selected }: NodeProps) => (
+    <BaseNode title="Delay / Wait" icon={FiClock} color="bg-amber-500" selected={selected}>
+        <p className="text-xs text-gray-700 dark:text-gray-300 font-bold">
+            ⏱ Wait {data.delay || 2} seconds
+        </p>
+        <Handle type="target" position={Position.Top} className="w-3 h-3 bg-gray-300 border-2 border-white" />
+        <Handle type="source" position={Position.Bottom} className="w-3 h-3 bg-amber-500 border-2 border-white" />
+    </BaseNode>
+));
+
+export const ApiNode = memo(({ data, selected }: NodeProps) => (
+    <BaseNode title="API Call" icon={FiGlobe} color="bg-teal-500" selected={selected}>
+        <p className="text-[10px] font-bold text-teal-600 uppercase">{data.method || 'GET'}</p>
+        <p className="text-xs text-gray-500 truncate">{data.url || 'https://api.example.com'}</p>
+        <Handle type="target" position={Position.Top} className="w-3 h-3 bg-gray-300 border-2 border-white" />
+        <Handle type="source" position={Position.Bottom} className="w-3 h-3 bg-teal-500 border-2 border-white" />
+    </BaseNode>
+));
+
 export const EndNode = memo(({ data, selected }: NodeProps) => (
     <BaseNode title="End" icon={FiSquare} color="bg-red-500" selected={selected}>
         <p className="text-[10px] text-gray-500 font-medium">Conversation ends here</p>
@@ -68,5 +89,7 @@ export const nodeTypes = {
     message: MessageNode,
     input: InputNode,
     condition: ConditionNode,
+    delay: DelayNode,
+    api: ApiNode,
     end: EndNode,
 };

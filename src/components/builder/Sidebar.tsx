@@ -1,5 +1,5 @@
 import React from 'react';
-import { FiMessageSquare, FiPlay, FiSquare, FiHelpCircle, FiArrowDownCircle } from 'react-icons/fi';
+import { FiMessageSquare, FiPlay, FiSquare, FiHelpCircle, FiArrowDownCircle, FiClock, FiGlobe } from 'react-icons/fi';
 import useFlowStore from '@/store/useFlowStore';
 
 const Sidebar = () => {
@@ -60,6 +60,22 @@ const Sidebar = () => {
                         color="bg-purple-500"
                         onDragStart={onDragStart}
                         onClick={() => handleClick('condition')}
+                    />
+                    <DraggableItem
+                        type="delay"
+                        label="Delay / Wait"
+                        icon={<FiClock />}
+                        color="bg-amber-500"
+                        onDragStart={onDragStart}
+                        onClick={() => handleClick('delay')}
+                    />
+                    <DraggableItem
+                        type="api"
+                        label="API Call (Mock)"
+                        icon={<FiGlobe />}
+                        color="bg-teal-500"
+                        onDragStart={onDragStart}
+                        onClick={() => handleClick('api')}
                     />
                     <DraggableItem
                         type="end"

@@ -33,16 +33,40 @@ const ConfigPanel = () => {
                 </div>
 
                 {selectedNode.type === 'message' && (
-                    <div>
-                        <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">Bot Message</label>
-                        <textarea
-                            name="message"
-                            value={selectedNode.data.message || ''}
-                            onChange={handleChange}
-                            className="w-full h-32 px-4 py-3 rounded-xl border-2 border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-900 text-sm focus:border-primary outline-none transition-all resize-none"
-                            placeholder="Enter message for user..."
-                        />
-                    </div>
+                    <>
+                        <div>
+                            <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">Bot Message</label>
+                            <textarea
+                                name="message"
+                                value={selectedNode.data.message || ''}
+                                onChange={handleChange}
+                                className="w-full h-32 px-4 py-3 rounded-xl border-2 border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-900 text-sm focus:border-primary outline-none transition-all resize-none"
+                                placeholder="Enter message for user..."
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">Image URL (Optional)</label>
+                            <input
+                                type="text"
+                                name="imageUrl"
+                                value={selectedNode.data.imageUrl || ''}
+                                onChange={handleChange}
+                                className="w-full px-4 py-3 rounded-xl border-2 border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-900 text-sm focus:border-primary outline-none transition-all"
+                                placeholder="https://example.com/image.png"
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">Link URL (Optional)</label>
+                            <input
+                                type="text"
+                                name="linkUrl"
+                                value={selectedNode.data.linkUrl || ''}
+                                onChange={handleChange}
+                                className="w-full px-4 py-3 rounded-xl border-2 border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-900 text-sm focus:border-primary outline-none transition-all"
+                                placeholder="https://example.com"
+                            />
+                        </div>
+                    </>
                 )}
 
                 {selectedNode.type === 'condition' && (
@@ -71,6 +95,51 @@ const ConfigPanel = () => {
                             placeholder="e.g. user_name"
                         />
                     </div>
+                )}
+
+                {selectedNode.type === 'delay' && (
+                    <div>
+                        <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">Delay (Seconds)</label>
+                        <input
+                            type="number"
+                            name="delay"
+                            value={selectedNode.data.delay || 2}
+                            onChange={handleChange}
+                            min={1}
+                            max={60}
+                            className="w-full px-4 py-3 rounded-xl border-2 border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-900 text-sm focus:border-primary outline-none transition-all"
+                        />
+                    </div>
+                )}
+
+                {selectedNode.type === 'api' && (
+                    <>
+                        <div>
+                            <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">HTTP Method</label>
+                            <select
+                                name="method"
+                                value={selectedNode.data.method || 'GET'}
+                                onChange={handleChange as any}
+                                className="w-full px-4 py-3 rounded-xl border-2 border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-900 text-sm focus:border-primary outline-none transition-all"
+                            >
+                                <option value="GET">GET</option>
+                                <option value="POST">POST</option>
+                                <option value="PUT">PUT</option>
+                                <option value="DELETE">DELETE</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">API URL</label>
+                            <input
+                                type="text"
+                                name="url"
+                                value={selectedNode.data.url || ''}
+                                onChange={handleChange}
+                                className="w-full px-4 py-3 rounded-xl border-2 border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-900 text-sm focus:border-primary outline-none transition-all"
+                                placeholder="https://api.example.com/data"
+                            />
+                        </div>
+                    </>
                 )}
             </div>
 
