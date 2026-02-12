@@ -37,37 +37,10 @@ const menuItems = [
         gradient: "from-cyan-500 to-blue-500"
     },
     {
-        name: "Flow Builder",
-        href: "/builder",
-        icon: FiLayout,
-        gradient: "from-blue-600 to-blue-400"
-    },
-    {
         name: "Spreadsheets",
         href: "/dashboard/admin/spreadsheet",
         icon: FiGrid,
         gradient: "from-green-500 to-emerald-500"
-    },
-    {
-        name: "Analytics",
-        href: "/dashboard/admin/analytics",
-        icon: FiBarChart2,
-        gradient: "from-pink-500 to-rose-500"
-    },
-    {
-        name: "Users",
-        icon: FiUsers,
-        gradient: "from-blue-500 to-cyan-500",
-        children: [
-            { name: "All Users", href: "/dashboard/admin/users", icon: FiUsers },
-            { name: "Create User", href: "/dashboard/admin/users/create", icon: FiSettings },
-        ],
-    },
-    {
-        name: "Settings",
-        href: "/dashboard/admin/settings",
-        icon: FiSettings,
-        gradient: "from-gray-500 to-gray-700"
     },
     {
         name: "Profile",
@@ -95,19 +68,19 @@ function SidebarItem({ item, isCollapsed }) {
             <div>
                 <button
                     onClick={() => setIsOpen(!isOpen)}
-                    className={`group w-full flex items-center justify-between px-3 py-3 rounded-xl transition-all ${isActive
+                    className={`group w-full flex items-center justify-between px-3 py-3 rounded-md transition-all ${isActive
                         ? "bg-blue-50 dark:bg-blue-900/10 text-blue-600"
                         : "text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
                         }`}
                 >
                     <div className="flex items-center gap-3">
-                        <div className={`w-9 h-9 rounded-lg flex items-center justify-center ${isActive
-                            ? `bg-gradient-to-br ${item.gradient} shadow-lg`
+                        <div className={`w-9 h-9 rounded-md flex items-center justify-center ${isActive
+                            ? `bg-gradient-to-br ${item.gradient} shadow-md`
                             : "bg-gray-100 dark:bg-gray-700 group-hover:bg-gray-200 dark:group-hover:bg-gray-600"
                             } transition-all`}>
                             <item.icon className={`w-[18px] h-[18px] ${isActive ? "text-white" : "text-gray-500 dark:text-gray-400"}`} />
                         </div>
-                        {!isCollapsed && <span className="font-medium text-sm">{item.name}</span>}
+                        {!isCollapsed && <span className="font-normal text-sm uppercase tracking-tight">{item.name}</span>}
                     </div>
                     {!isCollapsed && (
                         <FiChevronDown
@@ -146,18 +119,18 @@ function SidebarItem({ item, isCollapsed }) {
     return (
         <Link
             href={item.href}
-            className={`group flex items-center gap-3 px-3 py-3 rounded-xl transition-all ${isActive
+            className={`group flex items-center gap-3 px-3 py-3 rounded-md transition-all ${isActive
                 ? "bg-blue-50 dark:bg-blue-900/10 text-blue-600"
                 : "text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
                 }`}
         >
-            <div className={`w-9 h-9 rounded-lg flex items-center justify-center ${isActive
-                ? `bg-gradient-to-br ${item.gradient} shadow-lg`
+            <div className={`w-9 h-9 rounded-md flex items-center justify-center ${isActive
+                ? `bg-gradient-to-br ${item.gradient} shadow-md`
                 : "bg-gray-100 dark:bg-gray-700 group-hover:bg-gray-200 dark:group-hover:bg-gray-600"
                 } transition-all`}>
                 <item.icon className={`w-[18px] h-[18px] ${isActive ? "text-white" : "text-gray-500 dark:text-gray-400"}`} />
             </div>
-            {!isCollapsed && <span className="font-medium text-sm">{item.name}</span>}
+            {!isCollapsed && <span className="font-normal text-sm uppercase tracking-tight">{item.name}</span>}
         </Link>
     );
 }
@@ -209,7 +182,7 @@ export default function DashboardLayout({ children }) {
             >
                 <div className="h-16 flex items-center justify-between px-4 border-b border-gray-200 dark:border-gray-700">
                     <Link href="/" className="flex items-center gap-2">
-                        <div className="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center shadow-lg shadow-blue-500/20">
+                        <div className="w-10 h-10 rounded-md bg-blue-600 flex items-center justify-center shadow-lg">
                             <span className="text-white font-bold text-lg">C</span>
                         </div>
                         {isSidebarOpen && (
@@ -223,16 +196,16 @@ export default function DashboardLayout({ children }) {
                 <div className="px-4 py-3 border-b border-gray-100 dark:border-gray-700">
                     <Link
                         href="/"
-                        className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-gray-500 hover:text-blue-600 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700 transition-all group"
+                        className="flex items-center gap-3 px-3 py-2.5 rounded-md text-gray-500 hover:text-blue-600 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700 transition-all group"
                     >
                         <FiArrowLeft className="group-hover:-translate-x-1 transition-transform" size={18} />
-                        {isSidebarOpen && <span className="text-sm font-medium">Back to Website</span>}
+                        {isSidebarOpen && <span className="text-sm font-normal">Back to Website</span>}
                     </Link>
                 </div>
 
                 <nav className="px-3 py-4 space-y-1 overflow-y-auto max-h-[calc(100vh-200px)]">
                     {isSidebarOpen && (
-                        <p className="px-3 py-2 text-[10px] font-bold uppercase tracking-widest text-gray-400">
+                        <p className="px-3 py-2 text-[10px] font-semibold uppercase tracking-widest text-gray-400">
                             Main Menu
                         </p>
                     )}

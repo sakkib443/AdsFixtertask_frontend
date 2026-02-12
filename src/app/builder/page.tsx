@@ -40,7 +40,6 @@ function BuilderContent() {
                 if (res.data.edges) {
                     setEdges(res.data.edges);
                 }
-                toast.success('Flow loaded!');
             }
         } catch (e) {
             console.error('Failed to load flow', e);

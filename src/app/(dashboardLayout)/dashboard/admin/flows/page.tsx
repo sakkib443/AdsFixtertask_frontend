@@ -9,9 +9,11 @@ import {
 } from "react-icons/fi";
 import { flowService } from "@/services/api";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
 export default function FlowManagementPage() {
+    const router = useRouter();
     const [flows, setFlows] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState("");
@@ -41,10 +43,11 @@ export default function FlowManagementPage() {
                 isActive: false,
             });
             if (res.success) {
-                toast.success("Flow created!");
+                toast.success("Flow created! Redirecting to builder...");
                 setNewFlowName("");
                 setShowCreateModal(false);
-                fetchFlows();
+                // Redirect directly to the builder with the new flow ID
+                router.push(`/builder?flowId=${res.data._id}`);
             }
         } catch (e) { toast.error("Failed to create flow"); }
     };
@@ -130,14 +133,14 @@ export default function FlowManagementPage() {
                 <div className="flex items-center gap-3">
                     <button
                         onClick={handleImport}
-                        className="flex items-center gap-2 px-5 py-3 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-2xl font-bold text-xs uppercase tracking-widest hover:bg-gray-200 dark:hover:bg-gray-700 transition-all"
+                        className="flex items-center gap-2 px-5 py-3 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-md font-semibold text-xs uppercase tracking-widest hover:bg-gray-200 dark:hover:bg-gray-700 transition-all"
                     >
                         <FiUpload size={16} />
                         Import
                     </button>
                     <button
                         onClick={() => setShowCreateModal(true)}
-                        className="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-blue-700 transition-all shadow-xl shadow-blue-600/20 active:scale-95"
+                        className="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-md font-bold text-xs uppercase tracking-widest hover:bg-blue-700 transition-all shadow-md active:scale-95"
                     >
                         <FiPlus size={18} />
                         New Flow
@@ -147,17 +150,17 @@ export default function FlowManagementPage() {
 
             {/* Stats Row */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="bg-white dark:bg-gray-800 rounded-2xl p-5 border border-gray-100 dark:border-gray-700">
-                    <p className="text-[10px] font-black uppercase tracking-widest text-gray-400">Total Flows</p>
-                    <p className="text-3xl font-black text-gray-900 dark:text-white mt-1">{flows.length}</p>
+                <div className="bg-white dark:bg-gray-800 rounded-md p-5 border border-gray-100 dark:border-gray-700">
+                    <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Total Flows</p>
+                    <p className="text-3xl font-bold text-gray-900 dark:text-white mt-1">{flows.length}</p>
                 </div>
-                <div className="bg-white dark:bg-gray-800 rounded-2xl p-5 border border-gray-100 dark:border-gray-700">
-                    <p className="text-[10px] font-black uppercase tracking-widest text-green-500">Active</p>
-                    <p className="text-3xl font-black text-green-600 mt-1">{activeCount}</p>
+                <div className="bg-white dark:bg-gray-800 rounded-md p-5 border border-gray-100 dark:border-gray-700">
+                    <p className="text-[10px] font-bold uppercase tracking-widest text-green-500">Active</p>
+                    <p className="text-3xl font-bold text-green-600 mt-1">{activeCount}</p>
                 </div>
-                <div className="bg-white dark:bg-gray-800 rounded-2xl p-5 border border-gray-100 dark:border-gray-700">
-                    <p className="text-[10px] font-black uppercase tracking-widest text-yellow-500">Inactive</p>
-                    <p className="text-3xl font-black text-yellow-600 mt-1">{flows.length - activeCount}</p>
+                <div className="bg-white dark:bg-gray-800 rounded-md p-5 border border-gray-100 dark:border-gray-700">
+                    <p className="text-[10px] font-bold uppercase tracking-widest text-yellow-500">Inactive</p>
+                    <p className="text-3xl font-bold text-yellow-600 mt-1">{flows.length - activeCount}</p>
                 </div>
             </div>
 
@@ -169,7 +172,7 @@ export default function FlowManagementPage() {
                     placeholder="Search flows..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full pl-12 pr-4 py-4 bg-white dark:bg-gray-800 border-2 border-transparent focus:border-blue-600/20 rounded-2xl outline-none transition-all shadow-sm font-medium"
+                    className="w-full pl-12 pr-4 py-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:border-blue-600/50 rounded-md outline-none transition-all shadow-sm font-normal"
                 />
             </div>
 
@@ -183,33 +186,29 @@ export default function FlowManagementPage() {
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, scale: 0.95 }}
                             layout
-                            className="group bg-white dark:bg-gray-800 rounded-3xl border-2 border-transparent hover:border-blue-600/20 transition-all shadow-sm hover:shadow-xl overflow-hidden"
+                            className="group bg-white dark:bg-gray-800 rounded-md border border-gray-200 dark:border-gray-700 hover:border-blue-600 transition-all shadow-sm hover:shadow-md overflow-hidden"
                         >
                             <div className="p-6">
                                 <div className="flex items-start justify-between mb-4">
                                     <div className="flex items-center gap-3">
-                                        <div className="w-12 h-12 rounded-2xl bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center text-blue-600 group-hover:scale-110 transition-transform duration-500">
-                                            <FiLayout size={24} />
+                                        <div className="w-10 h-10 rounded-md bg-blue-50 dark:bg-blue-900/20 text-blue-600 group-hover:scale-105 transition-transform duration-500">
+                                            <FiLayout size={20} />
                                         </div>
                                         <div>
-                                            <h3 className="text-lg font-black tracking-tight">{flow.name}</h3>
-                                            <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mt-0.5">
+                                            <h3 className="text-base font-bold tracking-tight uppercase">{flow.name}</h3>
+                                            <p className="text-[9px] font-normal uppercase tracking-widest text-gray-400 mt-0.5">
                                                 v{flow.version || 1} · {flow.nodes?.length || 0} nodes
                                             </p>
                                         </div>
                                     </div>
                                     <button
                                         onClick={() => handleToggleActive(flow._id)}
-                                        className={`px-3 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest transition-all ${flow.isActive
+                                        className={`px-3 py-1 rounded-full text-[9px] font-bold uppercase tracking-widest transition-all ${flow.isActive
                                             ? 'bg-green-100 text-green-700 dark:bg-green-900/20 dark:text-green-400'
                                             : 'bg-gray-100 text-gray-500 dark:bg-gray-700 dark:text-gray-400'
                                             }`}
                                     >
-                                        {flow.isActive ? (
-                                            <span className="flex items-center gap-1"><FiCheckCircle size={12} /> Active</span>
-                                        ) : (
-                                            <span className="flex items-center gap-1"><FiAlertCircle size={12} /> Inactive</span>
-                                        )}
+                                        {flow.isActive ? 'Active' : 'Inactive'}
                                     </button>
                                 </div>
 
@@ -222,25 +221,25 @@ export default function FlowManagementPage() {
                                 <div className="flex items-center gap-2 flex-wrap">
                                     <Link
                                         href={`/builder?flowId=${flow._id}`}
-                                        className="flex items-center gap-1.5 px-4 py-2 bg-blue-600 text-white rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-blue-700 transition-all shadow-md shadow-blue-600/20"
+                                        className="flex items-center gap-1.5 px-4 py-2 bg-blue-600 text-white rounded-md text-[10px] font-bold uppercase tracking-widest hover:bg-blue-700 transition-all shadow-sm"
                                     >
                                         <FiEdit3 size={14} /> Edit
                                     </Link>
                                     <button
                                         onClick={() => handleDuplicate(flow._id)}
-                                        className="flex items-center gap-1.5 px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-gray-200 dark:hover:bg-gray-600 transition-all"
+                                        className="flex items-center gap-1.5 px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-md text-[10px] font-bold uppercase tracking-widest hover:bg-gray-200 dark:hover:bg-gray-600 transition-all"
                                     >
-                                        <FiCopy size={14} /> Copy
+                                        <FiCopy size={14} /> Make a copy
                                     </button>
                                     <button
                                         onClick={() => handleExport(flow)}
-                                        className="flex items-center gap-1.5 px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-gray-200 dark:hover:bg-gray-600 transition-all"
+                                        className="flex items-center gap-1.5 px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-md text-[10px] font-bold uppercase tracking-widest hover:bg-gray-200 dark:hover:bg-gray-600 transition-all"
                                     >
                                         <FiDownload size={14} /> JSON
                                     </button>
                                     <button
                                         onClick={() => handleDelete(flow._id)}
-                                        className="flex items-center gap-1.5 px-4 py-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ml-auto"
+                                        className="flex items-center gap-1.5 px-4 py-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-md text-[10px] font-bold uppercase tracking-widest transition-all ml-auto"
                                     >
                                         <FiTrash2 size={14} /> Delete
                                     </button>
@@ -279,29 +278,29 @@ export default function FlowManagementPage() {
                             initial={{ scale: 0.95, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
                             exit={{ scale: 0.95, opacity: 0 }}
-                            className="bg-white dark:bg-gray-800 rounded-3xl p-8 w-full max-w-md shadow-2xl"
+                            className="bg-white dark:bg-gray-800 rounded-md p-8 w-full max-w-md shadow-2xl"
                             onClick={(e) => e.stopPropagation()}
                         >
-                            <h2 className="text-2xl font-black tracking-tighter uppercase mb-6">Create New Flow</h2>
+                            <h2 className="text-xl font-bold tracking-tight uppercase mb-6">Create New Flow</h2>
                             <input
                                 type="text"
-                                placeholder="Flow name (e.g., Customer Support Bot)"
+                                placeholder="Flow name (e.g., Support Bot)"
                                 value={newFlowName}
                                 onChange={(e) => setNewFlowName(e.target.value)}
                                 onKeyDown={(e) => e.key === 'Enter' && handleCreate()}
                                 autoFocus
-                                className="w-full px-5 py-4 bg-gray-50 dark:bg-gray-900 rounded-2xl border-2 border-transparent focus:border-blue-600/20 outline-none font-medium mb-6"
+                                className="w-full px-5 py-4 bg-gray-50 dark:bg-gray-900 rounded-md border border-gray-200 dark:border-gray-700 focus:border-blue-600/50 outline-none font-normal mb-6"
                             />
                             <div className="flex items-center gap-3">
                                 <button
                                     onClick={() => setShowCreateModal(false)}
-                                    className="flex-1 px-5 py-3.5 bg-gray-100 dark:bg-gray-700 rounded-2xl font-bold text-sm hover:bg-gray-200 dark:hover:bg-gray-600 transition-all"
+                                    className="flex-1 px-5 py-3.5 bg-gray-100 dark:bg-gray-700 rounded-md font-bold text-[10px] uppercase tracking-widest hover:bg-gray-200 dark:hover:bg-gray-600 transition-all"
                                 >
                                     Cancel
                                 </button>
                                 <button
                                     onClick={handleCreate}
-                                    className="flex-1 px-5 py-3.5 bg-blue-600 text-white rounded-2xl font-bold text-sm hover:bg-blue-700 transition-all shadow-lg shadow-blue-600/20"
+                                    className="flex-1 px-5 py-3.5 bg-blue-600 text-white rounded-md font-bold text-[10px] uppercase tracking-widest hover:bg-blue-700 transition-all shadow-md"
                                 >
                                     Create Flow
                                 </button>

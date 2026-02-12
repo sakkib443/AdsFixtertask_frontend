@@ -22,12 +22,6 @@ const nextConfig = {
   },
   // Enable React Strict Mode
   reactStrictMode: true,
-  // Turbopack configuration
-  experimental: {
-    turbo: {
-      // Turbopack specific settings
-    },
-  },
 };
 
 export default nextConfig;

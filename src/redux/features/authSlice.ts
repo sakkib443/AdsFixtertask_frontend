@@ -8,7 +8,7 @@ interface AuthState {
 
 const getInitialState = (): AuthState => {
     if (typeof window !== "undefined") {
-        const saved = localStorage.getItem("chatbot-flow-auth");
+        const saved = localStorage.getItem("creativehub-auth");
         if (saved) {
             try {
                 return JSON.parse(saved);
@@ -30,13 +30,13 @@ const authSlice = createSlice({
             state.token = token;
             state.isAuthenticated = true;
             if (typeof window !== "undefined") {
-                localStorage.setItem("chatbot-flow-auth", JSON.stringify(state));
+                localStorage.setItem("creativehub-auth", JSON.stringify(state));
             }
         },
         updateUser: (state, action: PayloadAction<any>) => {
             state.user = { ...state.user, ...action.payload };
             if (typeof window !== "undefined") {
-                localStorage.setItem("chatbot-flow-auth", JSON.stringify(state));
+                localStorage.setItem("creativehub-auth", JSON.stringify(state));
             }
         },
         logout: (state) => {
@@ -44,7 +44,7 @@ const authSlice = createSlice({
             state.token = null;
             state.isAuthenticated = false;
             if (typeof window !== "undefined") {
-                localStorage.removeItem("chatbot-flow-auth");
+                localStorage.removeItem("creativehub-auth");
             }
         },
     },
