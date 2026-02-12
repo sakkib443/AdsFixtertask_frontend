@@ -1,0 +1,45 @@
+{
+  "name": "creativehub-frontend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "CreativeHub Pro - Digital Marketplace & eLearning Platform",
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "production": "node server.js",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^5.2.2",
+    "@reduxjs/toolkit": "^2.10.1",
+    "@types/lodash": "^4.17.23",
+    "@types/socket.io-client": "^1.4.36",
+    "@zoom/meetingsdk": "^5.1.0",
+    "clsx": "^2.1.1",
+    "date-fns": "^4.1.0",
+    "framer-motion": "^12.0.0",
+    "lodash": "^4.17.23",
+    "lucide-react": "^0.563.0",
+    "next": "16.1.1",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "react-hook-form": "^7.69.0",
+    "react-hot-toast": "^2.6.0",
+    "react-icons": "^5.5.0",
+    "react-redux": "^9.2.0",
+    "reactflow": "^11.11.4",
+    "recharts": "^3.0.0",
+    "socket.io-client": "^4.8.3",
+    "tailwind-merge": "^3.3.0",
+    "zod": "^4.2.1",
+    "zustand": "^5.0.11"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "25.2.3",
+    "eslint": "^9",
+    "eslint-config-next": "16.1.1",
+    "tailwindcss": "^4"
+  }
+}
