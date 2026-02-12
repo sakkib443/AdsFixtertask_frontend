@@ -36,7 +36,6 @@ export default function Navbar() {
 
     const navLinks = [
         { name: "HOME", href: "/" },
-        { name: "FLOW BUILDER", href: "/builder" },
         { name: "DASHBOARD", href: "/dashboard/admin" },
     ];
 
@@ -49,15 +48,15 @@ export default function Navbar() {
         <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? "bg-white/80 dark:bg-gray-950/80 backdrop-blur-lg shadow-sm" : "bg-transparent"}`}>
             <div className="container mx-auto px-6 h-20 flex items-center justify-between">
                 <Link href="/" className="flex items-center gap-2 group">
-                    <div className="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center text-white shadow-lg shadow-blue-500/20 group-hover:rotate-12 transition-transform">
-                        <FiLayout size={20} />
+                    <div className="w-9 h-9 rounded-md bg-blue-600 flex items-center justify-center text-white shadow-lg shadow-blue-500/20 group-hover:scale-105 transition-transform">
+                        <FiLayout size={18} />
                     </div>
-                    <span className="text-xl font-black text-gray-900 dark:text-white tracking-tighter uppercase">Flow<span className="text-blue-600">Builder</span></span>
+                    <span className="text-xl font-bold text-gray-900 dark:text-white tracking-tight uppercase">Flow<span className="text-blue-600">Builder</span></span>
                 </Link>
 
                 <div className="hidden lg:flex items-center gap-8">
                     {navLinks.map((link) => (
-                        <Link key={link.name} href={link.href} className="text-[11px] font-black text-gray-500 hover:text-blue-600 transition-colors tracking-widest uppercase">
+                        <Link key={link.name} href={link.href} className="text-[10px] font-bold text-gray-500 hover:text-blue-600 transition-colors tracking-widest uppercase">
                             {link.name}
                         </Link>
                     ))}
@@ -82,11 +81,11 @@ export default function Navbar() {
                                         initial={{ opacity: 0, y: 10 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         exit={{ opacity: 0, y: 10 }}
-                                        className="absolute right-0 top-full mt-3 w-56 bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-100 dark:border-gray-800 py-2 overflow-hidden"
+                                        className="absolute right-0 top-full mt-3 w-56 bg-white dark:bg-gray-900 rounded-md shadow-2xl border border-gray-100 dark:border-gray-800 py-2 overflow-hidden"
                                     >
                                         <div className="px-4 py-2 border-b dark:border-gray-800">
                                             <p className="text-xs font-bold text-gray-900 dark:text-white">{user.firstName} {user.lastName}</p>
-                                            <p className="text-[10px] text-gray-500 truncate uppercase mt-0.5 tracking-tighter">{user.role}</p>
+                                            <p className="text-[9px] text-gray-500 truncate uppercase mt-0.5 tracking-wider font-normal">{user.role}</p>
                                         </div>
                                         <DropdownLink href="/dashboard/admin" icon={FiGrid} label="Admin Dashboard" />
                                         <DropdownLink href="/dashboard/admin/profile" icon={FiSettings} label="Settings" />
@@ -102,7 +101,7 @@ export default function Navbar() {
                         </div>
                     ) : (
                         <Link href="/login">
-                            <button className="px-6 py-2.5 bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-[11px] font-black rounded-xl hover:opacity-90 transition-opacity tracking-widest uppercase">
+                            <button className="px-6 py-2.5 bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-[10px] font-bold rounded-md hover:opacity-90 transition-opacity tracking-widest uppercase">
                                 Sign In
                             </button>
                         </Link>
@@ -127,7 +126,7 @@ export default function Navbar() {
                                 <Link
                                     key={link.name}
                                     href={link.href}
-                                    className="text-2xl font-black text-gray-900 dark:text-white uppercase tracking-tighter"
+                                    className="text-xl font-bold text-gray-900 dark:text-white uppercase tracking-tight"
                                     onClick={() => setIsMobileOpen(false)}
                                 >
                                     {link.name}
@@ -145,7 +144,7 @@ function DropdownLink({ href, icon: Icon, label }) {
     return (
         <Link
             href={href}
-            className="flex items-center gap-3 px-4 py-2 text-[11px] font-black text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-blue-600 transition-all uppercase tracking-tighter"
+            className="flex items-center gap-3 px-4 py-2 text-[10px] font-bold text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-blue-600 transition-all uppercase tracking-wider"
         >
             <Icon size={14} /> {label}
         </Link>
