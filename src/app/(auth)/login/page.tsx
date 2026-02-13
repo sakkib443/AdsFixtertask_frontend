@@ -44,7 +44,8 @@ export default function LoginPage() {
                 }
             }
         } catch (error: any) {
-            toast.error(error.response?.data?.message || "Login failed. Try admin@gmail.com / admin@gmail.com");
+            console.error("Login attempt failed:", error);
+            toast.error(error.message || "Login failed. Please check your credentials.");
         } finally {
             setIsLoading(false);
         }
