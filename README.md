@@ -4,10 +4,24 @@ A comprehensive full-stack solution featuring a **Visual Chatbot Flow Builder** 
 
 ---
 
-## 🚀 Live Deployment
+## 🚀 Deployment Links
 - **Frontend URL**: [https://ads-fixtertask-frontend.vercel.app/](https://ads-fixtertask-frontend.vercel.app/)
 - **Backend URL**: [https://ads-fixtertask-backend.vercel.app/](https://ads-fixtertask-backend.vercel.app/)
 - **GitHub Repository**: [https://github.com/sakkib443/AdsFixtertask_frontend](https://github.com/sakkib443/AdsFixtertask_frontend)
+
+---
+
+### ⚠️ Important: Vercel Environment Variables
+If Login or Registration fails, please ensure you have set these environment variables in your Vercel Dashboard:
+
+**For Backend Project:**
+- `DATABASE_URL`: Your MongoDB connection string (e.g., `mongodb+srv://...`)
+- `JWT_ACCESS_SECRET`: Any random string (required for tokens)
+- `ADMIN_EMAIL`: `admin@gmail.com`
+- `ADMIN_PASSWORD`: `admin@gmail.com`
+
+**For Frontend Project:**
+- `NEXT_PUBLIC_API_URL`: `https://ads-fixtertask-backend.vercel.app` (Your backend URL)
 
 ---
 
