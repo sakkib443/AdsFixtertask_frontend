@@ -49,7 +49,7 @@ export default function RegisterPage() {
     };
 
     return (
-        <div className="min-h-screen flex bg-white dark:bg-gray-950">
+        <div className="min-h-screen flex bg-white">
             {/* Left Side Form */}
             <div className="flex-1 flex flex-col justify-center px-8 lg:px-24 py-12 overflow-y-auto">
                 <motion.div
@@ -61,11 +61,11 @@ export default function RegisterPage() {
                         <div className="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center text-white shadow-lg shadow-blue-500/20 group-hover:rotate-12 transition-transform">
                             <FiLayout size={20} />
                         </div>
-                        <span className="text-xl font-black text-gray-900 dark:text-white tracking-tighter uppercase">Flow<span className="text-blue-600">Builder</span></span>
+                        <span className="text-xl font-black text-gray-900 tracking-tighter uppercase">Flow<span className="text-blue-600">Builder</span></span>
                     </Link>
 
                     <div>
-                        <h1 className="text-4xl font-black text-gray-900 dark:text-white tracking-tighter uppercase">Join Us</h1>
+                        <h1 className="text-4xl font-black text-gray-900 tracking-tighter uppercase">Join Us</h1>
                         <p className="text-gray-500 font-medium mt-2">Start building intelligent conversation flows today.</p>
                     </div>
 
@@ -76,7 +76,7 @@ export default function RegisterPage() {
                                 <input
                                     type="text"
                                     {...register("firstName", { required: true })}
-                                    className="w-full px-4 py-3.5 bg-gray-50 dark:bg-gray-900 border-2 border-transparent focus:border-blue-600/20 rounded-2xl outline-none transition-all font-medium"
+                                    className="w-full px-4 py-3.5 bg-gray-50 border-2 border-transparent focus:border-blue-600/20 rounded-2xl outline-none transition-all font-medium text-gray-900"
                                     placeholder="John"
                                 />
                             </div>
@@ -85,7 +85,7 @@ export default function RegisterPage() {
                                 <input
                                     type="text"
                                     {...register("lastName", { required: true })}
-                                    className="w-full px-4 py-3.5 bg-gray-50 dark:bg-gray-900 border-2 border-transparent focus:border-blue-600/20 rounded-2xl outline-none transition-all font-medium"
+                                    className="w-full px-4 py-3.5 bg-gray-50 border-2 border-transparent focus:border-blue-600/20 rounded-2xl outline-none transition-all font-medium text-gray-900"
                                     placeholder="Doe"
                                 />
                             </div>
@@ -96,8 +96,18 @@ export default function RegisterPage() {
                             <input
                                 type="email"
                                 {...register("email", { required: true })}
-                                className="w-full px-4 py-3.5 bg-gray-50 dark:bg-gray-900 border-2 border-transparent focus:border-blue-600/20 rounded-2xl outline-none transition-all font-medium"
+                                className="w-full px-4 py-3.5 bg-gray-50 border-2 border-transparent focus:border-blue-600/20 rounded-2xl outline-none transition-all font-medium text-gray-900"
                                 placeholder="name@company.com"
+                            />
+                        </div>
+
+                        <div className="space-y-2">
+                            <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 ml-1">Phone Number</label>
+                            <input
+                                type="tel"
+                                {...register("phone", { required: true })}
+                                className="w-full px-4 py-3.5 bg-gray-50 border-2 border-transparent focus:border-blue-600/20 rounded-2xl outline-none transition-all font-medium text-gray-900"
+                                placeholder="+880 1XXX XXXXXX"
                             />
                         </div>
 
@@ -108,7 +118,7 @@ export default function RegisterPage() {
                                     type={showPassword ? "text" : "password"}
                                     {...register("password", { required: true, minLength: 6 })}
                                     placeholder="••••••••"
-                                    className="w-full px-4 pr-12 py-3.5 bg-gray-50 dark:bg-gray-900 border-2 border-transparent focus:border-blue-600/20 rounded-2xl outline-none transition-all font-medium"
+                                    className="w-full px-4 pr-12 py-3.5 bg-gray-50 border-2 border-transparent focus:border-blue-600/20 rounded-2xl outline-none transition-all font-medium text-gray-900"
                                 />
                                 <button
                                     type="button"

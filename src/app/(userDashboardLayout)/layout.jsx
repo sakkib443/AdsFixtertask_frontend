@@ -125,10 +125,10 @@ export default function UserDashboardLayout({ children }) {
     if (!mounted || !isAuthenticated) return null;
 
     return (
-        <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex">
+        <div className="min-h-screen bg-gray-50 flex">
             {/* Sidebar Desktop */}
-            <aside className="hidden lg:flex flex-col w-72 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 sticky top-0 h-screen">
-                <div className="p-6 border-b border-gray-100 dark:border-gray-700">
+            <aside className="hidden lg:flex flex-col w-72 bg-white border-r border-gray-200 sticky top-0 h-screen">
+                <div className="p-6 border-b border-gray-100">
                     <Link href="/" className="flex items-center gap-3">
                         <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white font-bold shadow-lg shadow-primary/20">
                             C
@@ -191,7 +191,7 @@ export default function UserDashboardLayout({ children }) {
             {/* Main Content */}
             <div className="flex-1 flex flex-col min-w-0">
                 {/* Header */}
-                <header className="h-16 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 flex items-center justify-between px-4 lg:px-8 sticky top-0 z-30">
+                <header className="h-16 bg-white/80 backdrop-blur-md border-b border-gray-200 flex items-center justify-between px-4 lg:px-8 sticky top-0 z-30">
                     <div className="flex items-center gap-4">
                         <button onClick={() => setIsMobileOpen(true)} className="lg:hidden p-2 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
                             <FiMenu size={20} />

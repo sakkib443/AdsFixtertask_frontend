@@ -45,13 +45,13 @@ export default function Navbar() {
     };
 
     return (
-        <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? "bg-white/80 dark:bg-gray-950/80 backdrop-blur-lg shadow-sm" : "bg-transparent"}`}>
+        <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? "bg-white/80 backdrop-blur-lg shadow-sm" : "bg-transparent"}`}>
             <div className="container mx-auto px-6 h-20 flex items-center justify-between">
                 <Link href="/" className="flex items-center gap-2 group">
                     <div className="w-9 h-9 rounded-md bg-blue-600 flex items-center justify-center text-white shadow-lg shadow-blue-500/20 group-hover:scale-105 transition-transform">
                         <FiLayout size={18} />
                     </div>
-                    <span className="text-xl font-bold text-gray-900 dark:text-white tracking-tight uppercase">Flow<span className="text-blue-600">Builder</span></span>
+                    <span className="text-xl font-bold text-gray-900 tracking-tight uppercase">Flow<span className="text-blue-600">Builder</span></span>
                 </Link>
 
                 <div className="hidden lg:flex items-center gap-8">
@@ -67,7 +67,7 @@ export default function Navbar() {
                         <div className="relative">
                             <button
                                 onClick={() => setIsProfileOpen(!isProfileOpen)}
-                                className="flex items-center gap-2 p-1 pl-1 pr-3 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all"
+                                className="flex items-center gap-2 p-1 pl-1 pr-3 rounded-full bg-gray-100 hover:bg-gray-200 transition-all"
                             >
                                 <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs font-bold">
                                     {user.firstName?.[0] || "A"}
@@ -81,17 +81,17 @@ export default function Navbar() {
                                         initial={{ opacity: 0, y: 10 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         exit={{ opacity: 0, y: 10 }}
-                                        className="absolute right-0 top-full mt-3 w-56 bg-white dark:bg-gray-900 rounded-md shadow-2xl border border-gray-100 dark:border-gray-800 py-2 overflow-hidden"
+                                        className="absolute right-0 top-full mt-3 w-56 bg-white rounded-md shadow-2xl border border-gray-100 py-2 overflow-hidden"
                                     >
-                                        <div className="px-4 py-2 border-b dark:border-gray-800">
-                                            <p className="text-xs font-bold text-gray-900 dark:text-white">{user.firstName} {user.lastName}</p>
+                                        <div className="px-4 py-2 border-b">
+                                            <p className="text-xs font-bold text-gray-900">{user.firstName} {user.lastName}</p>
                                             <p className="text-[9px] text-gray-500 truncate uppercase mt-0.5 tracking-wider font-normal">{user.role}</p>
                                         </div>
                                         <DropdownLink href="/dashboard/admin" icon={FiGrid} label="Admin Dashboard" />
                                         <DropdownLink href="/dashboard/admin/profile" icon={FiSettings} label="Settings" />
                                         <button
                                             onClick={handleLogout}
-                                            className="w-full flex items-center gap-3 px-4 py-2.5 text-[11px] font-black text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 transition-all uppercase tracking-tighter"
+                                            className="w-full flex items-center gap-3 px-4 py-2.5 text-[11px] font-black text-red-500 hover:bg-red-50 transition-all uppercase tracking-tighter"
                                         >
                                             <FiLogOut size={14} /> Log Out
                                         </button>
@@ -100,14 +100,21 @@ export default function Navbar() {
                             </AnimatePresence>
                         </div>
                     ) : (
-                        <Link href="/login">
-                            <button className="px-6 py-2.5 bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-[10px] font-bold rounded-md hover:opacity-90 transition-opacity tracking-widest uppercase">
-                                Sign In
-                            </button>
-                        </Link>
+                        <div className="flex items-center gap-3">
+                            <Link href="/login">
+                                <button className="text-[10px] font-bold text-gray-700 hover:text-blue-600 transition-colors tracking-widest uppercase">
+                                    Sign In
+                                </button>
+                            </Link>
+                            <Link href="/register">
+                                <button className="px-6 py-2.5 bg-blue-600 text-white text-[10px] font-bold rounded-md hover:bg-blue-700 transition-all tracking-widest shadow-lg shadow-blue-500/20 uppercase">
+                                    Sign Up
+                                </button>
+                            </Link>
+                        </div>
                     ))}
 
-                    <button onClick={() => setIsMobileOpen(!isMobileOpen)} className="lg:hidden p-2 text-gray-900 dark:text-white">
+                    <button onClick={() => setIsMobileOpen(!isMobileOpen)} className="lg:hidden p-2 text-gray-900">
                         {isMobileOpen ? <FiX size={24} /> : <FiMenu size={24} />}
                     </button>
                 </div>
@@ -119,19 +126,38 @@ export default function Navbar() {
                         initial={{ opacity: 0, x: 20 }}
                         animate={{ opacity: 1, x: 0 }}
                         exit={{ opacity: 0, x: 20 }}
-                        className="fixed inset-0 top-20 bg-white dark:bg-gray-950 z-[100] p-6 lg:hidden"
+                        className="fixed inset-0 top-20 bg-white z-[100] p-6 lg:hidden"
                     >
                         <div className="flex flex-col gap-4">
                             {navLinks.map((link) => (
                                 <Link
                                     key={link.name}
                                     href={link.href}
-                                    className="text-xl font-bold text-gray-900 dark:text-white uppercase tracking-tight"
+                                    className="text-xl font-bold text-gray-900 uppercase tracking-tight"
                                     onClick={() => setIsMobileOpen(false)}
                                 >
                                     {link.name}
                                 </Link>
                             ))}
+
+                            {!isAuthenticated && (
+                                <div className="flex flex-col gap-4 pt-6 border-t border-gray-100">
+                                    <Link
+                                        href="/login"
+                                        className="w-full py-4 text-center border-2 border-gray-900 text-gray-900 font-bold uppercase tracking-widest text-sm rounded-xl"
+                                        onClick={() => setIsMobileOpen(false)}
+                                    >
+                                        Sign In
+                                    </Link>
+                                    <Link
+                                        href="/register"
+                                        className="w-full py-4 text-center bg-blue-600 text-white font-bold uppercase tracking-widest text-sm rounded-xl shadow-xl shadow-blue-500/20"
+                                        onClick={() => setIsMobileOpen(false)}
+                                    >
+                                        Create Free Account
+                                    </Link>
+                                </div>
+                            )}
                         </div>
                     </motion.div>
                 )}

@@ -1,10 +1,11 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from 'react';
+import toast from 'react-hot-toast';
 import {
     FiBold, FiItalic, FiAlignLeft, FiAlignCenter, FiAlignRight, FiType,
     FiPlus, FiTrash2, FiArrowUp, FiArrowDown, FiDownload, FiSave,
-    FiChevronDown, FiGrid
+    FiChevronDown, FiGrid, FiUpload
 } from 'react-icons/fi';
 
 const getColName = (idx: number) => String.fromCharCode(65 + idx);
@@ -47,8 +48,42 @@ export default function SpreadsheetGrid({ initialData, onSave }: { initialData: 
     const [showColorPicker, setShowColorPicker] = useState(false);
     const [contextMenu, setContextMenu] = useState<{ x: number, y: number, type: 'row' | 'col', index: number } | null>(null);
 
+    // Resizing state
+    const [colWidths, setColWidths] = useState<Record<string, number>>({});
+    const [rowHeights, setRowHeights] = useState<Record<number, number>>({});
+    const resizing = useRef<{ type: 'col' | 'row', index: string | number, startPos: number, startSize: number } | null>(null);
+
     const sheet = sheets[activeSheet];
     const { cells: data, rows: ROWS, cols: COLS } = sheet;
+
+    // Resizing Handlers
+    const startResize = (e: React.MouseEvent, type: 'col' | 'row', index: string | number) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const startPos = type === 'col' ? e.clientX : e.clientY;
+        const startSize = type === 'col' ? (colWidths[index as string] || 120) : (rowHeights[index as number] || 40);
+        resizing.current = { type, index, startPos, startSize };
+
+        const onMouseMove = (moveEvent: MouseEvent) => {
+            if (!resizing.current) return;
+            const delta = (type === 'col' ? moveEvent.clientX : moveEvent.clientY) - resizing.current.startPos;
+            const newSize = Math.max(40, resizing.current.startSize + delta);
+            if (type === 'col') {
+                setColWidths(prev => ({ ...prev, [index as string]: newSize }));
+            } else {
+                setRowHeights(prev => ({ ...prev, [index as number]: newSize }));
+            }
+        };
+
+        const onMouseUp = () => {
+            resizing.current = null;
+            window.removeEventListener('mousemove', onMouseMove);
+            window.removeEventListener('mouseup', onMouseUp);
+        };
+
+        window.addEventListener('mousemove', onMouseMove);
+        window.addEventListener('mouseup', onMouseUp);
+    };
 
     // Save to global and localStorage
     useEffect(() => {
@@ -311,6 +346,56 @@ export default function SpreadsheetGrid({ initialData, onSave }: { initialData: 
         printWindow.document.close();
     };
 
+    const importData = () => {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = '.json,.csv';
+        input.onchange = async (e: any) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            const text = await file.text();
+
+            if (file.name.endsWith('.json')) {
+                try {
+                    const parsed = JSON.parse(text);
+                    if (Array.isArray(parsed)) setData(parsed);
+                    else if (parsed.cells) setData(parsed.cells);
+                    toast.success('JSON imported!');
+                } catch (err) { toast.error('Invalid JSON'); }
+            } else {
+                // CSV Parsing
+                const rows = text.split('\n');
+                const newCells: CellData[] = [];
+                rows.forEach((rowText, rIdx) => {
+                    const row = rIdx + 1;
+                    const values = rowText.split(',');
+                    values.forEach((val, cIdx) => {
+                        if (cIdx >= 26) return;
+                        const col = getColName(cIdx);
+                        newCells.push({ row, col, value: val.trim(), style: {} });
+                    });
+                });
+                setData(newCells);
+                toast.success('CSV imported!');
+            }
+        };
+        input.click();
+    };
+
+    const moveRow = (index: number, direction: 'up' | 'down') => {
+        const targetIndex = direction === 'up' ? index - 1 : index + 1;
+        if (targetIndex < 1 || targetIndex > ROWS) return;
+
+        const newCells = data.map(cell => {
+            if (cell.row === index) return { ...cell, row: targetIndex };
+            if (cell.row === targetIndex) return { ...cell, row: index };
+            return cell;
+        });
+        setData(newCells);
+        setContextMenu(null);
+        toast.success(`Row moved ${direction}`);
+    };
+
     const handleContextMenu = (e: React.MouseEvent, type: 'row' | 'col', index: number) => {
         e.preventDefault();
         setContextMenu({ x: e.clientX, y: e.clientY, type, index });
@@ -351,9 +436,10 @@ export default function SpreadsheetGrid({ initialData, onSave }: { initialData: 
                     <button onClick={addRow} className="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors text-[10px] font-bold flex items-center gap-1" title="Add Row"><FiPlus size={12} /> Row</button>
                     <button onClick={addCol} className="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors text-[10px] font-bold flex items-center gap-1" title="Add Column"><FiPlus size={12} /> Col</button>
                 </div>
-                {/* Export */}
+                {/* Export / Import */}
                 <div className="flex items-center gap-1 px-2">
                     <button onClick={exportPDF} className="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors text-[10px] font-bold flex items-center gap-1"><FiDownload size={12} /> PDF</button>
+                    <button onClick={importData} className="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors text-[10px] font-bold flex items-center gap-1"><FiUpload size={12} /> Import</button>
                 </div>
                 <div className="ml-auto px-4 flex items-center gap-2">
                     <span className="text-[10px] font-black uppercase text-gray-400">Cell: {selectedCell ? `${selectedCell.col}${selectedCell.row}` : '--'}</span>
@@ -372,29 +458,49 @@ export default function SpreadsheetGrid({ initialData, onSave }: { initialData: 
 
             {/* Grid */}
             <div className="flex-1 overflow-auto relative">
-                <div className="grid" style={{ gridTemplateColumns: `40px repeat(${COLS}, 120px)` }}>
+                <div
+                    className="grid"
+                    style={{
+                        gridTemplateColumns: `40px ${Array.from({ length: COLS }).map((_, i) => `${colWidths[getColName(i)] || 120}px`).join(' ')}`
+                    }}
+                >
                     {/* Header Row */}
                     <div className="sticky top-0 z-20 h-8 bg-gray-100 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 flex items-center justify-center font-bold text-[10px] text-gray-400" />
-                    {Array.from({ length: COLS }).map((_, i) => (
-                        <div
-                            key={i}
-                            className="sticky top-0 z-20 h-8 bg-gray-100 dark:bg-gray-900 border-b border-r border-gray-200 dark:border-gray-700 flex items-center justify-center font-bold text-[10px] text-gray-400 uppercase tracking-widest cursor-context-menu"
-                            onContextMenu={(e) => handleContextMenu(e, 'col', i)}
-                        >
-                            {getColName(i)}
-                        </div>
-                    ))}
+                    {Array.from({ length: COLS }).map((_, i) => {
+                        const col = getColName(i);
+                        return (
+                            <div
+                                key={i}
+                                className="sticky top-0 z-20 h-8 bg-gray-100 dark:bg-gray-900 border-b border-r border-gray-200 dark:border-gray-700 flex items-center justify-center font-bold text-[10px] text-gray-400 uppercase tracking-widest cursor-context-menu group/header"
+                                onContextMenu={(e) => handleContextMenu(e, 'col', i)}
+                            >
+                                {col}
+                                {/* Col Resize Handle */}
+                                <div
+                                    className="absolute right-0 top-0 bottom-0 w-1 cursor-col-resize hover:bg-blue-500/50 transition-colors z-30"
+                                    onMouseDown={(e) => startResize(e, 'col', col)}
+                                />
+                            </div>
+                        );
+                    })}
 
                     {/* Data Rows */}
                     {Array.from({ length: ROWS }).map((_, rIdx) => {
                         const row = rIdx + 1;
+                        const rowHeight = rowHeights[row] || 40;
                         return (
                             <React.Fragment key={row}>
                                 <div
-                                    className="sticky left-0 z-10 bg-gray-100 dark:bg-gray-900 border-r border-b border-gray-200 dark:border-gray-700 flex items-center justify-center font-bold text-[10px] text-gray-400 cursor-context-menu"
+                                    className="sticky left-0 z-10 bg-gray-100 dark:bg-gray-900 border-r border-b border-gray-200 dark:border-gray-700 flex items-center justify-center font-bold text-[10px] text-gray-400 cursor-context-menu group/row-header"
+                                    style={{ height: rowHeight }}
                                     onContextMenu={(e) => handleContextMenu(e, 'row', row)}
                                 >
                                     {row}
+                                    {/* Row Resize Handle */}
+                                    <div
+                                        className="absolute bottom-0 left-0 right-0 h-1 cursor-row-resize hover:bg-blue-500/50 transition-colors z-30"
+                                        onMouseDown={(e) => startResize(e, 'row', row)}
+                                    />
                                 </div>
                                 {Array.from({ length: COLS }).map((_, cIdx) => {
                                     const col = getColName(cIdx);
@@ -410,10 +516,11 @@ export default function SpreadsheetGrid({ initialData, onSave }: { initialData: 
                                                 setEditingCell({ row, col });
                                                 setEditValue(cellData.formula || cellData.value);
                                             }}
-                                            className={`h-10 border-r border-b border-gray-100 dark:border-gray-700 px-3 flex items-center transition-colors relative group
+                                            className={`border-r border-b border-gray-100 dark:border-gray-700 px-3 flex items-center transition-colors relative group
                                                 ${isSelected ? 'ring-2 ring-inset ring-blue-500 bg-blue-50/10 z-10' : 'hover:bg-gray-50 dark:hover:bg-gray-900/40'}
                                             `}
                                             style={{
+                                                height: rowHeight,
                                                 fontWeight: cellData.style?.bold ? 'bold' : 'normal',
                                                 fontStyle: cellData.style?.italic ? 'italic' : 'normal',
                                                 textAlign: (cellData.style?.textAlign as any) || 'left',
@@ -486,6 +593,12 @@ export default function SpreadsheetGrid({ initialData, onSave }: { initialData: 
                         <>
                             <button onClick={() => { addRow(); setContextMenu(null); }} className="w-full px-4 py-2 text-left text-xs font-bold hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center gap-2">
                                 <FiPlus size={12} /> Insert Row Below
+                            </button>
+                            <button onClick={() => moveRow(contextMenu.index, 'up')} className="w-full px-4 py-2 text-left text-xs font-bold hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center gap-2">
+                                <FiArrowUp size={12} /> Move Row Up
+                            </button>
+                            <button onClick={() => moveRow(contextMenu.index, 'down')} className="w-full px-4 py-2 text-left text-xs font-bold hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center gap-2">
+                                <FiArrowDown size={12} /> Move Row Down
                             </button>
                             <button onClick={() => deleteRow(contextMenu.index)} className="w-full px-4 py-2 text-left text-xs font-bold text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 flex items-center gap-2">
                                 <FiTrash2 size={12} /> Delete Row {contextMenu.index}

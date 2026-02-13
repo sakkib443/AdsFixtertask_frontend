@@ -1,5 +1,5 @@
 import React from 'react';
-import { FiMessageSquare, FiPlay, FiSquare, FiHelpCircle, FiArrowDownCircle, FiClock, FiGlobe } from 'react-icons/fi';
+import { FiMessageSquare, FiPlay, FiSquare, FiHelpCircle, FiArrowDownCircle, FiClock, FiGlobe, FiCornerDownRight } from 'react-icons/fi';
 import useFlowStore from '@/store/useFlowStore';
 
 const Sidebar = () => {
@@ -25,7 +25,7 @@ const Sidebar = () => {
     };
 
     return (
-        <aside className="w-72 bg-white dark:bg-gray-950 border-r border-gray-100 dark:border-gray-800 p-6 flex flex-col gap-6">
+        <aside className="w-72 bg-white dark:bg-gray-950 border-r border-gray-100 dark:border-gray-800 p-6 flex flex-col gap-6 overflow-y-auto">
             <div>
                 <h3 className="text-sm font-black text-gray-400 uppercase tracking-widest mb-4">Components</h3>
                 <div className="grid grid-cols-1 gap-3">
@@ -76,6 +76,14 @@ const Sidebar = () => {
                         color="bg-teal-500"
                         onDragStart={onDragStart}
                         onClick={() => handleClick('api')}
+                    />
+                    <DraggableItem
+                        type="jump"
+                        label="Jump / Redirect"
+                        icon={<FiCornerDownRight />}
+                        color="bg-indigo-500"
+                        onDragStart={onDragStart}
+                        onClick={() => handleClick('jump')}
                     />
                     <DraggableItem
                         type="end"

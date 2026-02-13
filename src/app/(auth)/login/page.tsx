@@ -119,6 +119,15 @@ export default function LoginPage() {
                     <p className="text-center text-[10px] font-black uppercase tracking-widest text-gray-400">
                         Default Admin: admin@gmail.com / admin@gmail.com
                     </p>
+
+                    <div className="pt-4 text-center border-t border-gray-100 dark:border-gray-800">
+                        <p className="text-gray-500 font-medium text-sm">
+                            Don't have an account?{" "}
+                            <Link href="/register" className="text-blue-600 font-black uppercase tracking-widest text-[11px] hover:underline">
+                                Sign Up Now
+                            </Link>
+                        </p>
+                    </div>
                 </motion.div>
             </div>
 

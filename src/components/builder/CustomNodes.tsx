@@ -84,6 +84,14 @@ export const EndNode = memo(({ data, selected }: NodeProps) => (
     </BaseNode>
 ));
 
+export const JumpNode = memo(({ data, selected }: NodeProps) => (
+    <BaseNode title="Jump / Redirect" icon={FiCornerDownRight} color="bg-indigo-500" selected={selected}>
+        <p className="text-[10px] text-gray-500 font-medium">Jump to flow or node</p>
+        <p className="text-xs font-bold text-indigo-600 mt-1 truncate">ID: {data.targetNodeId || 'Select...'}</p>
+        <Handle type="target" position={Position.Top} className="w-3 h-3 bg-gray-300 border-2 border-white" />
+    </BaseNode>
+));
+
 export const nodeTypes = {
     start: StartNode,
     message: MessageNode,
@@ -91,5 +99,6 @@ export const nodeTypes = {
     condition: ConditionNode,
     delay: DelayNode,
     api: ApiNode,
+    jump: JumpNode,
     end: EndNode,
 };

@@ -1,2 +1,2 @@
 // Page Components - Main Export
-export * as Home from './home';
+// (Home components removed as they were not used in the job project)

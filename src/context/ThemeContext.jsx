@@ -87,7 +87,7 @@ export function ThemeProvider({ children }) {
                             bodyFont: themeData.fonts?.body || defaultTheme.bodyFont,
                             logoText: themeData.branding?.name || defaultTheme.logoText,
                             logoImage: themeData.branding?.logo || defaultTheme.logoImage,
-                            darkMode: defaultTheme.darkMode,
+                            darkMode: false, // Force dark mode off
                         };
                         setTheme(apiTheme);
                     }
@@ -120,12 +120,9 @@ export function ThemeProvider({ children }) {
             root.style.setProperty("--font-heading", `"${theme.headingFont}", sans-serif`);
             root.style.setProperty("--font-body", `"${theme.bodyFont}", sans-serif`);
 
-            // Dark Mode
-            if (theme.darkMode) {
-                document.body.classList.add("dark");
-            } else {
-                document.body.classList.remove("dark");
-            }
+            // Dark Mode - Force removal of dark class
+            document.body.classList.remove("dark");
+            document.documentElement.classList.remove("dark");
         }
     }, [theme]);
 

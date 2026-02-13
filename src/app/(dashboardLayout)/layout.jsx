@@ -175,10 +175,10 @@ export default function DashboardLayout({ children }) {
     if (!token || !isAuthenticated) return null;
 
     return (
-        <div className="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+        <div className="min-h-screen bg-gray-50 text-gray-900">
             <aside
                 className={`fixed top-0 left-0 z-40 h-screen transition-all duration-300 ${isSidebarOpen ? "w-72" : "w-20"
-                    } bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 hidden lg:block`}
+                    } bg-white border-r border-gray-200 hidden lg:block`}
             >
                 <div className="h-16 flex items-center justify-between px-4 border-b border-gray-200 dark:border-gray-700">
                     <Link href="/" className="flex items-center gap-2">
@@ -193,10 +193,10 @@ export default function DashboardLayout({ children }) {
                     </Link>
                 </div>
 
-                <div className="px-4 py-3 border-b border-gray-100 dark:border-gray-700">
+                <div className="px-4 py-3 border-b border-gray-100">
                     <Link
                         href="/"
-                        className="flex items-center gap-3 px-3 py-2.5 rounded-md text-gray-500 hover:text-blue-600 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700 transition-all group"
+                        className="flex items-center gap-3 px-3 py-2.5 rounded-md text-gray-500 hover:text-blue-600 hover:bg-gray-100 transition-all group"
                     >
                         <FiArrowLeft className="group-hover:-translate-x-1 transition-transform" size={18} />
                         {isSidebarOpen && <span className="text-sm font-normal">Back to Website</span>}
@@ -214,10 +214,10 @@ export default function DashboardLayout({ children }) {
                     ))}
                 </nav>
 
-                <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+                <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200 bg-white">
                     <button
                         onClick={handleLogout}
-                        className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
+                        className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-red-500 hover:bg-red-50 transition-colors"
                     >
                         <FiLogOut className="w-5 h-5" />
                         {isSidebarOpen && <span className="text-sm font-medium">Logout</span>}
@@ -265,7 +265,7 @@ export default function DashboardLayout({ children }) {
             </AnimatePresence>
 
             <div className={`${isSidebarOpen ? "lg:ml-72" : "lg:ml-20"} transition-all duration-300`}>
-                <header className="sticky top-0 z-30 h-16 bg-white/95 dark:bg-gray-800/95 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 px-4 lg:px-6 flex items-center justify-between">
+                <header className="sticky top-0 z-30 h-16 bg-white/95 backdrop-blur-md border-b border-gray-200 px-4 lg:px-6 flex items-center justify-between">
                     <div className="flex items-center gap-4">
                         <button
                             onClick={() => setIsMobileOpen(true)}

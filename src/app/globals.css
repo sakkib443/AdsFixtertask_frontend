@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+@theme {
+  --variant-dark: .force-disable-dark-mode;
+}
+
+:root {
+  color-scheme: light !important;
+}
+
 /* =====================================================
    CREATIVEHUB PRO - DYNAMIC DESIGN SYSTEM
    Admin থেকে Colors & Fonts change হবে
@@ -16,40 +24,34 @@
   --color-primary-10: rgba(196, 238, 24, 0.1);
   --color-primary-20: rgba(196, 238, 24, 0.2);
 
-  /* Secondary Colors (Stay Dark for contrast) */
-  --color-secondary: #09090B;
-  --color-secondary-dark: #000000;
-  --color-secondary-light: #18181B;
-  --color-secondary-10: rgba(249, 115, 22, 0.1);
-  /* Keep existing if not specified for change */
-  --color-secondary-20: rgba(249, 115, 22, 0.2);
-  /* Keep existing if not specified for change */
+  /* Secondary Colors (Updated to be light-mode friendly) */
+  --color-secondary: #f1f5f9;
+  --color-secondary-dark: #e2e8f0;
+  --color-secondary-light: #f8fafc;
+  --color-secondary-10: rgba(241, 245, 249, 0.1);
+  --color-secondary-20: rgba(241, 245, 249, 0.2);
 
   /* Accent Color */
   --color-accent: #C4EE18;
   --color-accent-10: rgba(16, 185, 129, 0.1);
   /* Keep existing if not specified for change */
 
-  /* Neutral Colors */
-  --color-gray-950: #09090B;
-  --color-gray-900: #18181B;
-  --color-gray-800: #27272A;
-  --color-gray-700: #334155;
-  /* Keep existing if not specified for removal */
-  --color-gray-600: #475569;
-  /* Keep existing if not specified for removal */
-  --color-gray-500: #64748b;
-  /* Keep existing if not specified for removal */
-  --color-gray-400: #94a3b8;
-  /* Keep existing if not specified for removal */
-  --color-gray-300: #cbd5e1;
-  /* Keep existing if not specified for removal */
-  --color-gray-200: #e2e8f0;
-  /* Keep existing if not specified for removal */
-  --color-gray-100: #f1f5f9;
-  /* Keep existing if not specified for removal */
+  /* Neutral Colors - Forced Light */
   --color-gray-50: #f8fafc;
-  /* Keep existing if not specified for removal */
+  --color-gray-100: #f1f5f9;
+  --color-gray-200: #e2e8f0;
+  --color-gray-300: #cbd5e1;
+  --color-gray-400: #94a3b8;
+  --color-gray-500: #64748b;
+  --color-gray-600: #475569;
+  --color-gray-700: #334155;
+  --color-gray-800: #1e293b;
+  --color-gray-900: #0f172a;
+  --color-gray-950: #020617;
+
+  /* Force all dark backgrounds to stay light */
+  --color-dark-bg: #ffffff;
+  --color-dark-border: #f1f5f9;
   --color-black: #000000;
   --color-white: #ffffff;
 
@@ -85,12 +87,12 @@
 
 body {
   font-family: var(--font-heading);
-  color: var(--color-gray-800);
-  background: var(--color-gray-50);
+  color: #0f172a;
+  background: #f8fafc;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.6;
-  cursor: default; /* Default cursor for background */
+  cursor: default;
 }
 
 /* Universal font inheritance - ensures all elements use heading font */
@@ -101,15 +103,33 @@ body {
 }
 
 /* Precise Cursor Management */
-p, span, h1, h2, h3, h4, h5, h6, li, blockquote {
-  cursor: text; /* Only show text cursor on actual text */
+p,
+span,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+li,
+blockquote {
+  cursor: text;
+  /* Only show text cursor on actual text */
 }
 
-a, button, [role="button"], select, input[type="submit"], input[type="button"], .clickable {
+a,
+button,
+[role="button"],
+select,
+input[type="submit"],
+input[type="button"],
+.clickable {
   cursor: pointer !important;
 }
 
-input, textarea, [contenteditable="true"] {
+input,
+textarea,
+[contenteditable="true"] {
   cursor: text;
 }
 
@@ -118,8 +138,11 @@ input, textarea, [contenteditable="true"] {
   caret-color: transparent;
 }
 
-input, textarea, [contenteditable="true"] {
-  caret-color: var(--color-primary); /* Show theme-colored caret in inputs */
+input,
+textarea,
+[contenteditable="true"] {
+  caret-color: var(--color-primary);
+  /* Show theme-colored caret in inputs */
 }
 
 /* Only p tags use body font for readable text */
@@ -457,37 +480,8 @@ h6 {
    DARK MODE
    ===================================================== */
 
-.dark {
-  color-scheme: dark;
-}
-
-.dark body {
-  background: var(--color-gray-900);
-  color: var(--color-gray-200);
-}
-
-.dark h1,
-.dark h2,
-.dark h3,
-.dark h4,
-.dark h5,
-.dark h6 {
-  color: var(--color-white);
-}
-
-.dark .card {
-  background: var(--color-gray-800);
-  border-color: var(--color-gray-700);
-}
-
-.dark .input {
-  background: var(--color-gray-800);
-  border-color: var(--color-gray-600);
-  color: var(--color-gray-100);
-}
-
-.dark .input:focus {
-  border-color: var(--color-primary);
+:root {
+  color-scheme: light !important;
 }
 
 /* =====================================================
@@ -695,4 +689,31 @@ video {
       var(--color-gray-600) 50%,
       var(--color-gray-700) 75%);
   background-size: 200% 100%;
+}
+
+/* FORCE WHITE THEME - Nuclear Overrides */
+[class*="dark:bg-"],
+[class*="dark:hover:bg-"],
+.bg-gray-950,
+.bg-gray-900,
+.bg-gray-800 {
+  background-color: #ffffff !important;
+}
+
+[class*="dark:text-"],
+[class*="dark:hover:text-"],
+[class*="dark:text-gray-"] {
+  color: #0f172a !important;
+}
+
+aside,
+header,
+nav {
+  background-color: #ffffff !important;
+  border-color: #f1f5f9 !important;
+}
+
+.bg-blue-600 .text-white,
+.bg-primary .text-white {
+  color: #ffffff !important;
 }

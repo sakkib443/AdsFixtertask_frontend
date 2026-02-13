@@ -141,6 +141,28 @@ const ConfigPanel = () => {
                         </div>
                     </>
                 )}
+
+                {selectedNode.type === 'jump' && (
+                    <div>
+                        <label className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">Jump to Node</label>
+                        <select
+                            name="targetNodeId"
+                            value={selectedNode.data.targetNodeId || ''}
+                            onChange={handleChange as any}
+                            className="w-full px-4 py-3 rounded-xl border-2 border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-900 text-sm focus:border-primary outline-none transition-all"
+                        >
+                            <option value="">Select a node...</option>
+                            {useFlowStore.getState().nodes
+                                .filter(n => n.id !== selectedNode.id)
+                                .map(n => (
+                                    <option key={n.id} value={n.id}>
+                                        {n.data?.label || n.type} ({n.id.slice(-4)})
+                                    </option>
+                                ))
+                            }
+                        </select>
+                    </div>
+                )}
             </div>
 
             <div className="mt-8 pt-8 border-t dark:border-gray-800">
