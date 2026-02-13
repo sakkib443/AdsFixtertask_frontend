@@ -4,9 +4,9 @@ A comprehensive full-stack solution featuring a **Visual Chatbot Flow Builder** 
 
 ---
 
-## 🚀 Live Demo & Repository
-- **Frontend URL**: [https://adsfixtertask-frontend.vercel.app/](https://adsfixtertask-frontend.vercel.app/) *(Coming soon/Update with your URL)*
-- **Backend URL**: [https://adsfixtertask-backend.onrender.com/](https://adsfixtertask-backend.onrender.com/) *(Coming soon/Update with your URL)*
+## 🚀 Live Deployment
+- **Frontend URL**: [https://ads-fixtertask-frontend.vercel.app/](https://ads-fixtertask-frontend.vercel.app/)
+- **Backend URL**: [https://ads-fixtertask-backend.vercel.app/](https://ads-fixtertask-backend.vercel.app/)
 - **GitHub Repository**: [https://github.com/sakkib443/AdsFixtertask_frontend](https://github.com/sakkib443/AdsFixtertask_frontend)
 
 ---
@@ -16,7 +16,7 @@ A comprehensive full-stack solution featuring a **Visual Chatbot Flow Builder** 
 ### 1. Frontend Architecture (Next.js 15+)
 - **Framework**: Next.js (App Router) for SEO, performance, and modern routing.
 - **State Management**:
-  - **Zustand**: Used for the specialized logic of the Flow Builder (Flow state, nodes, edges) to ensure low-latency updates during drag operations.
+  - **Zustand**: Used for the specialized logic of the Flow Builder (Flow state, nodes, edges) to ensure low-latency updates during drag-and-drop operations.
   - **Redux Toolkit**: Centralized management for Authentication and global User state.
   - **Context API**: Selective use for Theme and Language management.
 - **Styling**: Tailwind CSS with a **Guaranteed Light Theme** implementation (Global overrides for accessibility and aesthetic consistency).
@@ -32,38 +32,37 @@ A comprehensive full-stack solution featuring a **Visual Chatbot Flow Builder** 
 
 ---
 
-## ✨ Features Implemented
+## ✨ Detailed Feature List
 
-### Task 1: Chatbot Flow Builder (Primary)
-- **Visual Flow Editor**: Fully interactive Drag-and-Drop canvas using `reactflow`.
-- **Node Types**:
-  - `Start Node`: Initial entry point.
-  - `Message Node`: Supports text responses.
-  - `Input Node`: Halts execution to wait for user input.
-  - `Delay Node`: Configurable waiting periods (e.g., "Bot is typing...").
-  - `End Node`: Terminates the conversation.
-- **Connection Logic**: Validation to prevent circular loops and broken connections.
-- **Flow Management**: Create, Update, Delete, and Duplicate flows from a professional dashboard.
-- **Live Preview (Socket-Based)**: A sidebar panel that simulates the chatbot experience in real-time by executing the current builder state via WebSockets.
-- **Persistence**: 
-  - **Backend Sync**: Automatic syncing of flow structures to MongoDB.
-  - **Auto-Save**: Every 30 seconds to the cloud.
-  - **Local Backup**: Real-time backup to `LocalStorage` for crash recovery.
-- **Import/Export**: Export flows as JSON files and import them and render visually.
+### Task 1: Chatbot Flow Builder (Primary Task)
+The Flow Builder is a complete visual programming environment for designing automation.
+- **Visual Editor**: Fully interactive Drag-and-Drop canvas using `reactflow`.
+- **Node Dictionary**:
+  - `Start Node`: The required entry point for every flow.
+  - `Message Node`: Sends text messages to the user.
+  - `Input Node`: A blocking node that waits for a user response before continuing.
+  - `Delay Node`: Simulates human-like typing delays (configurabe seconds).
+  - `End Node`: Gracefully closes the socket session.
+- **Real-time Live Preview**: A side-panel "Simulator" that connects to the server via Socket.io. It executes the **actual server-side logic** of your flow, allowing the developer to test user inputs and node transitions instantly.
+- **Flow Management**: Professional dashboard to Create, Edit, Delete, Duplicate, and Toggle (Active/Inactive) flows.
+- **Cloud Sync**: Automatic sync with MongoDB.
+- **Offline Reliability**: Real-time backup to `LocalStorage` ensure no work is lost during connection drops.
+- **JSON Import/Export**: Ability to download the entire flow as a `.json` file and re-import it visually.
 
-### Task 2: Spreadsheet-Like Application (Bonus)
-- **Dynamic Grid**: Efficient grid management with real-time cell updates.
-- **Cell Operations**: Support for text/number input, highlighting, and basic data organization.
-- **REST Integration**: Spreadsheets are saved per-user and can be managed (list/create/delete) from the admin panel.
-- **Clean UI**: Minimalist Google Sheets-inspired design.
+### Task 2: Spreadsheet-Like Application (Secondary Task)
+A lightweight "Google Sheets" style editor for tabular data management.
+- **Grid Engine**: Dynamic row and column management.
+- **Cell Persistence**: Individual cell values are meticulously tracked and synced to the user's account.
+- **Multi-Sheet Support**: Users can manage multiple separate spreadsheet projects from the dashboard.
+- **UX**: Clean, minimalist design optimized for data entry.
 
 ---
 
-## 🏗️ Cleanup & Optimization (Developer Discipline)
-During the assessment, the codebase underwent a major refactoring:
-- **Dead Code Elimination**: Removed 20+ unused directories and legacy LMS/Marketplace modules to focus strictly on the required assessment tasks.
-- **Force Light Theme**: Removed dark-mode complexity to provide a consistent, premium light-ui experience as requested.
-- **Build Stabilization**: Fixed a critical `CssSyntaxError` preventing production deployments.
+## 🏗️ Technical Cleanup & Optimization
+As part of the engineering standard, the legacy codebase was heavily refactored:
+- **Module Pruning**: Removed over 20+ legacy and unused directories (LMS, Marketplaces, Blogs) to reduce bundle size and technical debt.
+- **Theme Standardization**: Implemented "Nuclear Overrides" in CSS to force a consistent white-label light theme, removing dark-mode bugs.
+- **Build Hardening**: Fixed critical PostCSS and syntax errors to ensure zero-warning production builds.
 
 ---
 
@@ -73,8 +72,7 @@ During the assessment, the codebase underwent a major refactoring:
 ```bash
 cd frontend
 npm install
-# Configure .env
-# NEXT_PUBLIC_API_URL=http://localhost:5000
+# Configure .env with NEXT_PUBLIC_API_URL
 npm run dev
 ```
 
@@ -82,20 +80,16 @@ npm run dev
 ```bash
 cd backend
 npm install
-# Configure .env
-# PORT=5000
-# DATABASE_URL=mongodb://...
-# JWT_ACCESS_SECRET=...
+# Configure .env with DATABASE_URL and JWT secrets
 npm run dev
 ```
 
 ---
 
-## ⚠️ Known Limitations & Trade-offs
-- **WebSocket Deployment**: On certain free hosting platforms (like Render), WebSockets might experience initial handshake delays. Attached local video demonstrates the real-time speed.
-- **Condition Nodes**: Basic routing implemented; advanced boolean logic nodes are scoped for future versions.
-- **Rich Text**: Basic text implemented for nodes; Full Tiptap integration is in the roadmap.
+## ⚠️ Known Limitations
+- **WebSocket Handshake**: On free-tier hosting (Render/Vercel), there may be a 1-2 second initial cold-start delay for the first socket connection.
+- **Authentication**: JWT tokens are stored securely; for production, HTTP-only cookies are recommended.
 
 ---
-**Developed by Sakib**  
+**Sheikh Sakibul Hasan**  
 *Senior Full-Stack Engineer Candidate*
