@@ -67,7 +67,7 @@ export function ThemeProvider({ children }) {
             try {
                 // Fetch from API - database is the ONLY source of truth
                 const response = await fetch(
-                    `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/design/theme`
+                    `https://ads-fixtertask-backend.vercel.app/api/design/theme`
                 );
 
                 if (response.ok) {

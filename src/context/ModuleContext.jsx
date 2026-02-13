@@ -44,7 +44,7 @@ export function ModuleProvider({ children }) {
         const loadModules = async () => {
             try {
                 const response = await fetch(
-                    `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/platforms/settings/modules`
+                    `https://ads-fixtertask-backend.vercel.app/api/platforms/settings/modules`
                 );
 
                 if (response.ok) {
@@ -72,7 +72,7 @@ export function ModuleProvider({ children }) {
     const refreshModules = async () => {
         try {
             const response = await fetch(
-                `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/platforms/settings/modules`
+                `https://ads-fixtertask-backend.vercel.app/api/platforms/settings/modules`
             );
 
             if (response.ok) {

@@ -8,7 +8,7 @@ import {
     FiShoppingBag, FiUser, FiStar, FiMessageCircle, FiDollarSign
 } from "react-icons/fi";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+const API_BASE = "https://ads-fixtertask-backend.vercel.app";
 
 export default function NotificationsPage() {
     const [notifications, setNotifications] = useState([]);

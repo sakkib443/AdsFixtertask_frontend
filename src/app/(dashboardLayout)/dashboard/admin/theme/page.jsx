@@ -114,7 +114,7 @@ export default function ThemeSettingsPage() {
             }
 
             const response = await fetch(
-                `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/design/theme`,
+                `${"https://ads-fixtertask-backend.vercel.app"}/api/design/theme`,
                 {
                     method: "PATCH",
                     headers: {

@@ -1,5 +1,5 @@
-// API Base URL
-export const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+// API Base URL - Hardcoded for reliability on Vercel
+export const API_BASE = "https://ads-fixtertask-backend.vercel.app";
 
 // Get auth token
 const getToken = () => {

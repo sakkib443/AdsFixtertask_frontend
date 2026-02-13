@@ -10,7 +10,7 @@ import {
 import { useSelector } from "react-redux";
 import { selectCurrentUser } from "@/redux/features/authSlice";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+const API_BASE = "https://ads-fixtertask-backend.vercel.app";
 
 export default function ProfilePage() {
     const currentUser = useSelector(selectCurrentUser);
